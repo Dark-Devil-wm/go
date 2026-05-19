@@ -25,8 +25,10 @@ import { NotFound } from './pages/NotFound';
 import { Admin } from './pages/Admin';
 import { Transformations } from './pages/Transformations';
 import { BlogPost } from './pages/BlogPost';
+import { TrainerProfile } from './pages/TrainerProfile';
+import { TrainerDashboard } from './pages/TrainerDashboard';
 
-const ProtectedRoute = ({ children, requireAdmin = false }: { children: React.ReactNode, requireAdmin?: boolean }) => {
+const ProtectedRoute = ({ children, requireAdmin = false, requireTrainer = false }: { children: React.ReactNode, requireAdmin?: boolean, requireTrainer?: boolean }) => {
   const { user, profile, loading } = useAuth();
   
   if (loading) return (
@@ -42,6 +44,7 @@ const ProtectedRoute = ({ children, requireAdmin = false }: { children: React.Re
   if (!user) return <Navigate to="/auth" />;
   
   if (requireAdmin && profile?.role !== 'admin') return <Navigate to="/dashboard" />;
+  if (requireTrainer && profile?.role !== 'trainer' && profile?.role !== 'admin') return <Navigate to="/dashboard" />;
   
   return <>{children}</>;
 };
@@ -90,6 +93,15 @@ export default function App() {
                   <Route path="/programs" element={<AnimatedPage><Programs /></AnimatedPage>} />
                   <Route path="/memberships" element={<AnimatedPage><Memberships /></AnimatedPage>} />
                   <Route path="/trainers" element={<AnimatedPage><Trainers /></AnimatedPage>} />
+                  <Route path="/trainers/:id" element={<AnimatedPage><TrainerProfile /></AnimatedPage>} />
+                  <Route 
+                    path="/trainer-dashboard" 
+                    element={
+                      <ProtectedRoute requireTrainer>
+                        <AnimatedPage><TrainerDashboard /></AnimatedPage>
+                      </ProtectedRoute>
+                    } 
+                  />
                   <Route path="/classes" element={<AnimatedPage><Classes /></AnimatedPage>} />
                   <Route path="/blog" element={<AnimatedPage><Blog /></AnimatedPage>} />
                   <Route path="/blog/:id" element={<AnimatedPage><BlogPost /></AnimatedPage>} />

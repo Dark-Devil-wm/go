@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2, Phone } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 export const AIChat = () => {
@@ -34,12 +34,24 @@ export const AIChat = () => {
 
   return (
     <>
-      <button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-8 right-8 z-50 w-16 h-16 bg-brand-blue text-black rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all neon-glow-blue"
-      >
-        <MessageCircle size={28} />
-      </button>
+      <div className="fixed bottom-8 right-8 z-50 flex flex-col gap-4">
+        <motion.a
+          href="https://wa.me/447857596220"
+          target="_blank"
+          rel="noopener noreferrer"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="w-16 h-16 bg-[#25D366] text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all"
+        >
+          <Phone size={28} />
+        </motion.a>
+        <button
+          onClick={() => setIsOpen(true)}
+          className="w-16 h-16 bg-brand-blue text-black rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all neon-glow-blue"
+        >
+          <MessageCircle size={28} />
+        </button>
+      </div>
 
       <AnimatePresence>
         {isOpen && (

@@ -23,12 +23,12 @@ import {
   Trash2, 
   Plus, 
   Edit3,
+  Award,
   ExternalLink,
   Search,
   ArrowUpRight,
   TrendingUp,
-  Activity,
-  Calendar
+  Activity
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useSEO } from '../hooks/useSEO';
@@ -36,8 +36,8 @@ import { useSEO } from '../hooks/useSEO';
 export const Admin = () => {
   const { user, profile, loading } = useAuth();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'users' | 'bookings' | 'blog' | 'analytics'>('analytics');
-  const [data, setData] = useState<any>({ users: [], bookings: [], blog: [] });
+  const [activeTab, setActiveTab] = useState<'users' | 'bookings' | 'blog' | 'analytics' | 'trainers'>('analytics');
+  const [data, setData] = useState<any>({ users: [], bookings: [], blog: [], trainers: [] });
   const [isBlogModalOpen, setIsBlogModalOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<any>(null);
   const [blogForm, setBlogForm] = useState<any>({ title: '', category: '', excerpt: '', content: '', image: '' });
@@ -58,11 +58,13 @@ export const Admin = () => {
       const usersSnap = await getDocs(collection(db, 'users'));
       const bookingsSnap = await getDocs(query(collection(db, 'bookings'), orderBy('date', 'desc')));
       const blogSnap = await getDocs(query(collection(db, 'blog'), orderBy('date', 'desc')));
+      const trainersSnap = await getDocs(collection(db, 'trainers'));
       
       setData({
         users: usersSnap.docs.map(d => ({ id: d.id, ...d.data() })),
         bookings: bookingsSnap.docs.map(d => ({ id: d.id, ...d.data() })),
-        blog: blogSnap.docs.map(d => ({ id: d.id, ...d.data() }))
+        blog: blogSnap.docs.map(d => ({ id: d.id, ...d.data() })),
+        trainers: trainersSnap.docs.map(d => ({ id: d.id, ...d.data() }))
       });
     };
 
@@ -116,7 +118,8 @@ export const Admin = () => {
           {[
             { id: 'analytics', label: 'Intelligence', icon: TrendingUp },
             { id: 'users', label: 'Practitioners', icon: Users },
-            { id: 'bookings', label: 'Protocols', icon: Calendar },
+            { id: 'trainers', label: 'Masters', icon: Award },
+            { id: 'bookings', label: 'Protocols', icon: CalendarIcon },
             { id: 'blog', label: 'Journal', icon: FileText }
           ].map((tab) => (
             <button
@@ -231,6 +234,45 @@ export const Admin = () => {
                             <Trash2 size={16} />
                           </button>
                         </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'trainers' && (
+              <div className="space-y-8">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-2xl font-bold uppercase tracking-tight">Master Practitioners</h3>
+                  <button className="flex items-center gap-2 bg-white text-black px-6 py-3 rounded-xl font-bold uppercase tracking-widest text-[10px]">
+                    <Plus size={14} /> Add Master
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {data.trainers.map((trainer: any) => (
+                    <div key={trainer.id} className="glass-morphism p-8 rounded-3xl border border-white/5 group">
+                      <div className="flex items-center gap-4 mb-6">
+                        <div className="w-12 h-12 rounded-2xl overflow-hidden grayscale">
+                          <img src={trainer.image} className="w-full h-full object-cover" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold uppercase text-white">{trainer.name}</h4>
+                          <div className="text-[10px] uppercase font-mono tracking-widest text-brand-blue">{trainer.specialization}</div>
+                        </div>
+                      </div>
+                      <div className="space-y-2 mb-8">
+                        <div className="text-[10px] uppercase font-mono tracking-widest text-white/40">Status</div>
+                        <div className="flex items-center gap-2">
+                          <div className={`w-2 h-2 rounded-full ${trainer.active ? 'bg-green-500' : 'bg-red-500'}`} />
+                          <span className="text-[10px] uppercase font-bold tracking-widest">{trainer.active ? 'Online' : 'Offline'}</span>
+                        </div>
+                      </div>
+                      <div className="flex gap-4">
+                        <button className="flex-grow bg-white/5 border border-white/10 py-3 rounded-xl text-[10px] uppercase font-bold tracking-widest hover:border-brand-blue transition-all">Edit Protocol</button>
+                        <button className="p-3 border border-white/5 rounded-xl hover:text-red-500 transition-colors">
+                          <Trash2 size={14} />
+                        </button>
                       </div>
                     </div>
                   ))}

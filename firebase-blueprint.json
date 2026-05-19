@@ -9,10 +9,36 @@
         "displayName": { "type": "string", "description": "The user's display name." },
         "email": { "type": "string", "format": "email", "description": "The user's email address." },
         "avatar": { "type": "string", "description": "URL to the user's avatar image." },
-        "role": { "type": "string", "enum": ["client", "admin"], "description": "The user's role." },
+        "role": { "type": "string", "enum": ["client", "admin", "trainer"], "description": "The user's role." },
         "createdAt": { "type": "string", "format": "date-time", "description": "When the profile was created." }
       },
       "required": ["userId", "email"]
+    },
+    "Trainer": {
+      "title": "Trainer Profile",
+      "description": "Details about a fitness trainer.",
+      "type": "object",
+      "properties": {
+        "trainerId": { "type": "string" },
+        "name": { "type": "string" },
+        "specialization": { "type": "string" },
+        "experience": { "type": "string" },
+        "bio": { "type": "string" },
+        "image": { "type": "string" },
+        "certifications": { "type": "array", "items": { "type": "string" } },
+        "social": {
+          "type": "object",
+          "properties": {
+            "instagram": { "type": "string" },
+            "facebook": { "type": "string" },
+            "twitter": { "type": "string" },
+            "linkedin": { "type": "string" }
+          }
+        },
+        "rating": { "type": "number" },
+        "active": { "type": "boolean" }
+      },
+      "required": ["name", "specialization", "image"]
     },
     "Program": {
       "title": "Fitness Program",
@@ -83,6 +109,10 @@
     "/programs/{programId}": {
       "schema": "Program",
       "description": "Stores available fitness programs."
+    },
+    "/trainers/{trainerId}": {
+      "schema": "Trainer",
+      "description": "Stores trainer profiles."
     },
     "/blog/{articleId}": {
       "schema": "BlogPost",

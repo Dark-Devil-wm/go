@@ -3,7 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 import { motion, AnimatePresence } from 'motion/react';
 import { collection, query, getDocs, orderBy, onSnapshot } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import { Calendar, Clock, Trophy, User as UserIcon, LogOut, ChevronRight, Plus, Activity } from 'lucide-react';
+import { Calendar, Clock, Trophy, User as UserIcon, LogOut, ChevronRight, Plus, Activity, Settings } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { BookingModal } from '../components/Dashboard/BookingModal';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
@@ -237,6 +237,27 @@ export const Dashboard = () => {
 
           {/* Sidebar */}
           <div className="space-y-12">
+            {profile?.role === 'trainer' && (
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="glass-morphism p-8 rounded-3xl border border-brand-blue/30 bg-brand-blue/5"
+              >
+                <h4 className="text-sm font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
+                  <Activity size={14} className="text-brand-blue" />
+                  Practitioner Laboratory
+                </h4>
+                <p className="text-[10px] text-white/40 uppercase tracking-widest leading-relaxed mb-6 font-mono">
+                  Access your client protocols, research journal, and scheduling infrastructure.
+                </p>
+                <button 
+                  onClick={() => navigate('/trainer-dashboard')}
+                  className="w-full bg-brand-blue text-black py-4 rounded-xl font-bold uppercase tracking-widest text-[10px] hover:scale-105 transition-all shadow-[0_0_20px_rgba(0,242,255,0.2)]"
+                >
+                  Enter Console
+                </button>
+              </motion.div>
+            )}
             {profile?.role === 'admin' && (
               <motion.div 
                 initial={{ opacity: 0, x: 20 }}

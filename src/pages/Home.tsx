@@ -2,7 +2,7 @@ import React from 'react';
 import { Hero } from '../components/Home/Hero';
 import { Services } from '../components/Home/Services';
 import { motion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Instagram } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useSEO } from '../hooks/useSEO';
@@ -298,6 +298,39 @@ export const Home = () => {
             </blockquote>
             <cite className="font-mono text-xs uppercase tracking-[0.4em] text-white/40 block">Aristotle — Applied to Strength</cite>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Social Feed Section */}
+      <section className="py-24 px-6 bg-white/[0.02]">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
+            <div>
+              <span className="font-mono text-brand-blue text-xs uppercase tracking-[0.4em] mb-4 block">On the Ground</span>
+              <h2 className="text-4xl md:text-6xl font-sans font-bold uppercase tracking-tighter italic">
+                Live <span className="text-white/20">Protocols</span>
+              </h2>
+            </div>
+            <a href="https://instagram.com" className="text-[10px] uppercase font-bold tracking-[0.2em] text-brand-blue border-b border-brand-blue pb-1 hover:text-white hover:border-white transition-all">
+              Follow the Lab @strengthfitness
+            </a>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80',
+              'https://images.unsplash.com/photo-1541534741688-6078c64b5cc5?auto=format&fit=crop&q=80',
+              'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80',
+              'https://images.unsplash.com/photo-1594911773962-763f0dfbacaa?auto=format&fit=crop&q=80'
+            ].map((img, i) => (
+              <div key={i} className="aspect-square rounded-3xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 cursor-pointer group relative">
+                <img src={img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Social Feed" />
+                <div className="absolute inset-0 bg-brand-blue/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <Instagram className="text-white" size={32} />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

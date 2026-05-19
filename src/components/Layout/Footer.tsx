@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Instagram, Facebook, Twitter, Mail, MapPin, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SocialLinks } from '../Common/SocialLinks';
 
 export const Footer = () => {
   return (
@@ -43,18 +44,7 @@ export const Footer = () => {
           <p className="text-white/40 max-w-sm mb-8 font-light leading-relaxed">
             Revolutionizing high-performance fitness through elite coaching, cinematic experiences, and clinical precision. Transform your limits into your legacy.
           </p>
-          <div className="flex items-center gap-4">
-            {[Instagram, Facebook, Twitter].map((Icon, i) => (
-              <motion.a
-                key={i}
-                href="#"
-                whileHover={{ y: -4, color: '#00f2ff' }}
-                className="w-10 h-10 border border-white/10 rounded-full flex items-center justify-center text-white/60 hover:border-brand-blue transition-colors"
-              >
-                <Icon size={18} />
-              </motion.a>
-            ))}
-          </div>
+          <SocialLinks className="mb-12" iconSize={24} />
         </div>
 
         <div>

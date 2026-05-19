@@ -19,13 +19,24 @@ service cloud.firestore {
       // Hardcoded admin for initial setup or lookup in admins collection
       return isSignedIn() && (request.auth.token.email == 'muh.lahore90@gmail.com' && request.auth.token.email_verified == true);
     }
+    
+    function isTrainer() {
+      // Check if user has trainer role in their profile
+      return isSignedIn() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'trainer';
+    }
 
     // 2. Validation Helpers
     function isValidUser(data) {
       return data.userId is string && data.userId.size() <= 128 &&
              data.email is string && data.email.size() <= 128 &&
              (data.get('displayName', '') is string && data.get('displayName', '').size() <= 128) &&
-             (data.get('role', 'client') in ['client', 'admin']);
+             (data.get('role', 'client') in ['client', 'admin', 'trainer']);
+    }
+
+    function isValidTrainerProfile(data) {
+      return data.name is string && data.name.size() <= 128 &&
+             data.specialization is string &&
+             data.image is string;
     }
 
     function isValidBooking(data) {
@@ -67,8 +78,14 @@ service cloud.firestore {
 
     // Blog Collection
     match /blog/{articleId} {
-      allow read: if true; // Public can see blog posts (maybe restrict to published: true)
-      allow write: if isAdmin();
+      allow read: if true; // Public can see blog posts
+      allow write: if isAdmin() || isTrainer();
+    }
+
+    // Trainers Collection
+    match /trainers/{trainerId} {
+      allow read: if true;
+      allow write: if isAdmin() || (isTrainer() && request.auth.uid == trainerId);
     }
 
     // Memberships Collection

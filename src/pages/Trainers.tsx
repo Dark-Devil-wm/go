@@ -110,7 +110,7 @@ export const Trainers = () => {
                       <Linkedin size={18} className="text-white/20 hover:text-white cursor-pointer transition-colors" />
                     </div>
                     <button 
-                      onClick={() => navigate('/contact')}
+                      onClick={() => navigate(`/trainers/${trainer.name.toLowerCase().replace(' ', '-')}`)}
                       className="flex items-center gap-2 group text-[10px] uppercase font-bold tracking-widest text-brand-blue"
                     >
                       View Profile
