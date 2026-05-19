@@ -6,7 +6,10 @@ import { useNavigate } from 'react-router-dom';
 
 export const Trainers = () => {
   const navigate = useNavigate();
-  useSEO('Elite Performance Master Coaches', 'Meet our world-class coaches in London. Experts in biomechanics, clinical nutrition, and neurological performance adaptation.');
+  useSEO({
+    title: 'Elite Performance Master Coaches',
+    description: 'Meet our world-class coaches in London. Experts in biomechanics, clinical nutrition, and neurological performance adaptation.'
+  });
 
   const trainers = [
     {

@@ -42,6 +42,37 @@
         "createdAt": { "type": "string", "format": "date-time" }
       },
       "required": ["userId", "serviceType", "date"]
+    },
+    "BlogPost": {
+      "title": "Blog Article",
+      "description": "Premium fitness and nutrition articles.",
+      "type": "object",
+      "properties": {
+        "articleId": { "type": "string" },
+        "title": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "content": { "type": "string" },
+        "category": { "type": "string" },
+        "author": { "type": "string" },
+        "image": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "published": { "type": "boolean" }
+      },
+      "required": ["title", "content", "category"]
+    },
+    "Membership": {
+      "title": "Membership Tier",
+      "description": "Details of different membership tiers.",
+      "type": "object",
+      "properties": {
+        "tierId": { "type": "string" },
+        "name": { "type": "string" },
+        "price": { "type": "number" },
+        "period": { "type": "string" },
+        "features": { "type": "array", "items": { "type": "string" } },
+        "color": { "type": "string" }
+      },
+      "required": ["name", "price", "features"]
     }
   },
   "firestore": {
@@ -52,6 +83,14 @@
     "/programs/{programId}": {
       "schema": "Program",
       "description": "Stores available fitness programs."
+    },
+    "/blog/{articleId}": {
+      "schema": "BlogPost",
+      "description": "Stores premium blog articles."
+    },
+    "/memberships/{tierId}": {
+      "schema": "Membership",
+      "description": "Stores membership tiers."
     },
     "/users/{userId}/bookings/{bookingId}": {
       "schema": "Booking",

@@ -26,6 +26,7 @@ export const Navbar = () => {
     { name: 'Memberships', path: '/memberships' },
     { name: 'Trainers', path: '/trainers' },
     { name: 'Classes', path: '/classes' },
+    { name: 'Transformations', path: '/transformations' },
     { name: 'Gallery', path: '/gallery' },
     { name: 'Journal', path: '/blog' },
     { name: 'Contact', path: '/contact' },
@@ -63,6 +64,11 @@ export const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center gap-6">
+            {profile?.role === 'admin' && (
+              <Link to="/admin" className="text-[10px] uppercase tracking-[0.2em] font-mono text-brand-blue border border-brand-blue/20 px-3 py-1.5 rounded hover:bg-brand-blue hover:text-black transition-all">
+                Director
+              </Link>
+            )}
             {user ? (
               <Link to="/dashboard" className="flex items-center gap-3 glass-morphism px-5 py-2.5 rounded-full border border-white/10 hover:border-brand-blue transition-all group">
                 <div className="w-8 h-8 rounded-full bg-brand-gray overflow-hidden border border-white/10">

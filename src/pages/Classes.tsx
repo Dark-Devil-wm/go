@@ -39,7 +39,10 @@ const classes = [
 ];
 
 export const Classes = () => {
-  useSEO('Classes & Protocols', 'Master your performance with our elite group classes in London. Biomechanics, conditioning, and elite hypertrophy.');
+  useSEO({
+    title: 'Classes & Protocols',
+    description: 'Master your performance with our elite group classes in London. Biomechanics, conditioning, and elite hypertrophy.'
+  });
 
   return (
     <div className="bg-brand-dark pt-32 pb-24">

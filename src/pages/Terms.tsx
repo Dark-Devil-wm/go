@@ -3,7 +3,10 @@ import { useSEO } from '../hooks/useSEO';
 import { Scale } from 'lucide-react';
 
 export const Terms = () => {
-  useSEO('Terms of Access', 'The official terms, code of conduct, and membership commitments for Strength Fitness London practitioners.');
+  useSEO({
+    title: 'Terms of Access',
+    description: 'The official terms, code of conduct, and membership commitments for Strength Fitness London practitioners.'
+  });
   return (
     <div className="bg-brand-dark pt-40 pb-24 px-6 min-h-screen">
       <div className="max-w-4xl mx-auto">

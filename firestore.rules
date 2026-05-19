@@ -34,6 +34,19 @@ service cloud.firestore {
              data.status in ['pending', 'confirmed', 'cancelled'];
     }
 
+    function isValidBlogPost(data) {
+      return data.title is string && data.title.size() <= 200 &&
+             data.content is string && data.content.size() <= 50000 &&
+             data.category is string &&
+             data.published is bool;
+    }
+
+    function isValidMembership(data) {
+      return data.name is string && data.name.size() <= 128 &&
+             data.price is number &&
+             data.features is list;
+    }
+
     // MATCHES
     
     // Users Collection
@@ -50,6 +63,18 @@ service cloud.firestore {
                       isValidUser(incoming()) &&
                       incoming().role == existing().role && // Immortality of role for clients
                       incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'avatar']);
+    }
+
+    // Blog Collection
+    match /blog/{articleId} {
+      allow read: if true; // Public can see blog posts (maybe restrict to published: true)
+      allow write: if isAdmin();
+    }
+
+    // Memberships Collection
+    match /memberships/{tierId} {
+      allow read: if true;
+      allow write: if isAdmin();
     }
 
     // Programs Collection

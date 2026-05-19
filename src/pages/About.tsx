@@ -4,7 +4,10 @@ import { Shield, Target, Zap, Award } from 'lucide-react';
 import { useSEO } from '../hooks/useSEO';
 
 export const About = () => {
-  useSEO('About Us - The London Sanctuary', 'Learn about our philosophy of clinical strength and elite physical culture in London. We redefine human performance through biomechanics and precision.');
+  useSEO({
+    title: 'About Us - The London Sanctuary',
+    description: 'Learn about our philosophy of clinical strength and elite physical culture in London. We redefine human performance through biomechanics and precision.'
+  });
 
   return (
     <div className="bg-brand-dark pt-32">

@@ -15,7 +15,10 @@ const images = [
 ];
 
 export const Gallery = () => {
-  useSEO('Visual Sanctuary - Our Studios', 'Explore the high-performance environment of Strength Fitness London. View our elite equipment, clinical labs, and transformation spaces.');
+  useSEO({
+    title: 'Visual Sanctuary - Our Studios',
+    description: 'Explore the high-performance environment of Strength Fitness London. View our elite equipment, clinical labs, and transformation spaces.'
+  });
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
 
   return (

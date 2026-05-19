@@ -6,7 +6,10 @@ import { useNavigate } from 'react-router-dom';
 
 export const Memberships = () => {
   const navigate = useNavigate();
-  useSEO('Memberships & Admission', 'Join the elite London fitness collective. Exclusive tiers including Studio Master and The Collective for high-performance practitioners.');
+  useSEO({
+    title: 'Memberships & Admission',
+    description: 'Join the elite London fitness collective. Exclusive tiers including Studio Master and The Collective for high-performance practitioners.'
+  });
 
   return (
     <div className="bg-brand-dark pt-32 pb-24">

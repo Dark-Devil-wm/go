@@ -22,9 +22,12 @@ import { Privacy } from './pages/Privacy';
 import { Terms } from './pages/Terms';
 import { Classes } from './pages/Classes';
 import { NotFound } from './pages/NotFound';
+import { Admin } from './pages/Admin';
+import { Transformations } from './pages/Transformations';
+import { BlogPost } from './pages/BlogPost';
 
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user, loading } = useAuth();
+const ProtectedRoute = ({ children, requireAdmin = false }: { children: React.ReactNode, requireAdmin?: boolean }) => {
+  const { user, profile, loading } = useAuth();
   
   if (loading) return (
     <div className="h-screen w-full flex items-center justify-center bg-brand-dark">
@@ -37,6 +40,8 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   );
   
   if (!user) return <Navigate to="/auth" />;
+  
+  if (requireAdmin && profile?.role !== 'admin') return <Navigate to="/dashboard" />;
   
   return <>{children}</>;
 };
@@ -72,6 +77,14 @@ export default function App() {
                       </ProtectedRoute>
                     } 
                   />
+                  <Route 
+                    path="/admin" 
+                    element={
+                      <ProtectedRoute requireAdmin>
+                        <AnimatedPage><Admin /></AnimatedPage>
+                      </ProtectedRoute>
+                    } 
+                  />
                   <Route path="/about" element={<AnimatedPage><About /></AnimatedPage>} />
                   <Route path="/training" element={<AnimatedPage><Programs /></AnimatedPage>} />
                   <Route path="/programs" element={<AnimatedPage><Programs /></AnimatedPage>} />
@@ -79,7 +92,9 @@ export default function App() {
                   <Route path="/trainers" element={<AnimatedPage><Trainers /></AnimatedPage>} />
                   <Route path="/classes" element={<AnimatedPage><Classes /></AnimatedPage>} />
                   <Route path="/blog" element={<AnimatedPage><Blog /></AnimatedPage>} />
+                  <Route path="/blog/:id" element={<AnimatedPage><BlogPost /></AnimatedPage>} />
                   <Route path="/gallery" element={<AnimatedPage><Gallery /></AnimatedPage>} />
+                  <Route path="/transformations" element={<AnimatedPage><Transformations /></AnimatedPage>} />
                   <Route path="/contact" element={<AnimatedPage><Contact /></AnimatedPage>} />
                   <Route path="/faq" element={<AnimatedPage><FAQ /></AnimatedPage>} />
                   <Route path="/privacy" element={<AnimatedPage><Privacy /></AnimatedPage>} />

@@ -9,7 +9,49 @@ import { useSEO } from '../hooks/useSEO';
 
 export const Home = () => {
   const navigate = useNavigate();
-  useSEO('Elite Personal Training London', 'Transform your performance protocol. Luxury fitness, clinical nutrition, and body architecture in Covent Garden, London.');
+  useSEO({
+    title: 'Elite Personal Training London',
+    description: 'Transform your performance protocol. Luxury fitness, clinical nutrition, and body architecture in Covent Garden, London.',
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "HealthClub",
+      "name": "Strength Fitness London",
+      "alternateName": "STRENGTH FITNESS",
+      "description": "London's premier luxury personal training studio and performance laboratory.",
+      "url": "https://strengthfitness.london",
+      "logo": "https://strengthfitness.london/logo.png",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Shelton Street",
+        "addressLocality": "London",
+        "postalCode": "WC2H",
+        "addressCountry": "GB"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 51.514,
+        "longitude": -0.125
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "06:00",
+        "closes": "22:00"
+      },
+      "sameAs": [
+        "https://www.instagram.com/strengthfitnesslondon",
+        "https://www.linkedin.com/company/strengthfitnesslondon"
+      ]
+    }
+  });
   
   return (
     <div className="bg-brand-dark">

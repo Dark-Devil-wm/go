@@ -6,7 +6,10 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { useSEO } from '../hooks/useSEO';
 
 export const Contact = () => {
-  useSEO('Support & Admission', 'Contact the London concierge for membership enquiries, performance diagnostics, and elite personal training consultations.');
+  useSEO({
+    title: 'Support & Admission',
+    description: 'Contact the London concierge for membership enquiries, performance diagnostics, and elite personal training consultations.'
+  });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -196,6 +199,25 @@ export const Contact = () => {
           {/* Static map reveal logic would go here */}
           <div className="absolute inset-0 bg-brand-dark/20 backdrop-blur-[2px]" />
         </div>
+
+        {/* Map Section */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="mt-24 aspect-[21/9] rounded-[48px] overflow-hidden border border-white/5 grayscale hover:grayscale-0 transition-all duration-1000"
+        >
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2482.905626245103!2d-0.12821612338006835!3d51.51493631021481!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604cc76a74653%3A0x6b107e38202b281b!2sShelton%20St%2C%20London%20WC2H%2C%20UK!5e0!3m2!1sen!2sus!4v1716100000000!5m2!1sen!2sus" 
+            width="100%" 
+            height="100%" 
+            style={{ border: 0 }} 
+            allowFullScreen={false} 
+            loading="lazy" 
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Strength Fitness London Map"
+          />
+        </motion.div>
       </section>
     </div>
   );

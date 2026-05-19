@@ -6,7 +6,10 @@ import { useSEO } from '../hooks/useSEO';
 
 export const Programs = () => {
   const navigate = useNavigate();
-  useSEO('Performance Protocols', 'Discover our data-driven performance blueprints. From Absolute Strength to Metabolic Matrix, forged in our London laboratory.');
+  useSEO({
+    title: 'Performance Protocols',
+    description: 'Discover our data-driven performance blueprints. From Absolute Strength to Metabolic Matrix, forged in our London laboratory.'
+  });
   const programs = [
     {
       title: 'Hypertrophy Protocol',

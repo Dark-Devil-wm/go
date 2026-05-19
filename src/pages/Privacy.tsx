@@ -3,7 +3,10 @@ import { useSEO } from '../hooks/useSEO';
 import { Shield } from 'lucide-react';
 
 export const Privacy = () => {
-  useSEO('Privacy Protocol', 'Strength Fitness high-performance data sovereignty and privacy standards for our London members.');
+  useSEO({
+    title: 'Privacy Protocol',
+    description: 'Strength Fitness high-performance data sovereignty and privacy standards for our London members.'
+  });
   return (
     <div className="bg-brand-dark pt-40 pb-24 px-6 min-h-screen">
       <div className="max-w-4xl mx-auto">

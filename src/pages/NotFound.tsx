@@ -6,7 +6,10 @@ import { useSEO } from '../hooks/useSEO';
 
 export const NotFound = () => {
   const navigate = useNavigate();
-  useSEO('404 - Not Found', 'The requested protocol could not be found in our London database.');
+  useSEO({
+    title: '404 - Not Found',
+    description: 'The requested protocol could not be found in our London database.'
+  });
 
   return (
     <div className="h-screen w-full bg-brand-dark flex items-center justify-center p-6 text-center">

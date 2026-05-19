@@ -237,6 +237,27 @@ export const Dashboard = () => {
 
           {/* Sidebar */}
           <div className="space-y-12">
+            {profile?.role === 'admin' && (
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="glass-morphism p-8 rounded-3xl border border-brand-blue/30 bg-brand-blue/5"
+              >
+                <h4 className="text-sm font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
+                  <Settings size={14} className="text-brand-blue" />
+                  Administrative Control
+                </h4>
+                <p className="text-[10px] text-white/40 uppercase tracking-widest leading-relaxed mb-6 font-mono">
+                  Access the core infrastructure to manage members, protocols, and the performance journal.
+                </p>
+                <button 
+                  onClick={() => navigate('/admin')}
+                  className="w-full bg-brand-blue text-black py-4 rounded-xl font-bold uppercase tracking-widest text-[10px] hover:scale-105 transition-all shadow-[0_0_20px_rgba(0,242,255,0.2)]"
+                >
+                  Enter Command Center
+                </button>
+              </motion.div>
+            )}
             <div className="glass-morphism p-8 rounded-3xl border border-white/5">
               <h3 className="text-xl font-sans font-bold uppercase tracking-tight mb-8 text-gradient">Program Recommendation</h3>
               <div className="relative aspect-video rounded-2xl overflow-hidden mb-6">
