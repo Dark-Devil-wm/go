@@ -1,0 +1,86 @@
+import React from 'react';
+import { motion } from 'motion/react';
+import { Shield, Target, Zap, Award } from 'lucide-react';
+import { useSEO } from '../hooks/useSEO';
+
+export const About = () => {
+  useSEO('About Us - The London Sanctuary', 'Learn about our philosophy of clinical strength and elite physical culture in London. We redefine human performance through biomechanics and precision.');
+
+  return (
+    <div className="bg-brand-dark pt-32">
+      {/* Hero Header */}
+      <section className="px-6 py-24 md:py-40 max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <span className="font-mono text-brand-blue text-xs uppercase tracking-[0.4em] mb-8 block">Our Philosophy</span>
+          <h1 className="text-6xl md:text-9xl font-sans font-bold uppercase tracking-tighter leading-[0.85] mb-12">
+            The Science <br />
+            <span className="italic text-white/20">Of Strength</span>
+          </h1>
+          <p className="max-w-3xl text-xl md:text-2xl text-white/60 font-light leading-relaxed">
+            Strength Fitness is a sanctuary for those who refuse to settle. Located in the heart of London, we combine clinical precision with elite physical culture to redefine what is possible for the human body.
+          </p>
+        </motion.div>
+      </section>
+
+      {/* Philosophy Pillars */}
+      <section className="py-32 px-6 bg-brand-gray/30">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+          {[
+            {
+              title: "Clinical Precision",
+              desc: "We analyze metrics, biomechanics, and data to build protocols that are biologically optimized for your unique DNA.",
+              icon: Target
+            },
+            {
+              title: "Elite Culture",
+              desc: "Environment dictates outcome. Our studios are designed to foster focus, discipline, and high-performance states.",
+              icon: Shield
+            },
+            {
+              title: "Continuous Mutation",
+              desc: "The plateau is a myth. We ensure constant adaptation melalui adaptive training load and neurological stimulation.",
+              icon: Zap
+            },
+            {
+              title: "London's Finest",
+              desc: "Our coaches are world-class practitioners, bringing decades of experience from professional athletics and clinical health.",
+              icon: Award
+            }
+          ].map((pillar, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="glass-morphism p-12 rounded-[40px] border border-white/5"
+            >
+              <pillar.icon className="text-brand-blue mb-8" size={32} />
+              <h3 className="text-3xl font-sans font-bold uppercase tracking-tight mb-6">{pillar.title}</h3>
+              <p className="text-white/40 font-light text-lg leading-relaxed">{pillar.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Cinematic Image Section */}
+      <section className="h-[70vh] relative overflow-hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&q=80" 
+          className="w-full h-full object-cover grayscale opacity-40"
+          alt="Studio"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-dark via-transparent to-brand-dark" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <h2 className="text-4xl md:text-6xl font-serif italic text-white/80 text-center max-w-4xl px-6">
+            "Your body is the instrument. We provide the composition."
+          </h2>
+        </div>
+      </section>
+    </div>
+  );
+};

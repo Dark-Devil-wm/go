@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://strengthfitness.london/sitemap.xml

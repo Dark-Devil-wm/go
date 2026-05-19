@@ -1,0 +1,6 @@
+{
+  "name": "Strength Fitness",
+  "description": "Elite luxury fitness platform featuring premium personal training, cinematic storytelling, and futuristic health experiences.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User account and profile information.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "The unique ID of the user." },
+        "displayName": { "type": "string", "description": "The user's display name." },
+        "email": { "type": "string", "format": "email", "description": "The user's email address." },
+        "avatar": { "type": "string", "description": "URL to the user's avatar image." },
+        "role": { "type": "string", "enum": ["client", "admin"], "description": "The user's role." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the profile was created." }
+      },
+      "required": ["userId", "email"]
+    },
+    "Program": {
+      "title": "Fitness Program",
+      "description": "A high-performance fitness program details.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "duration": { "type": "string" },
+        "category": { "type": "string", "enum": ["Fat Loss", "Muscle Building", "Strength", "Conditioning"] },
+        "price": { "type": "number" },
+        "image": { "type": "string" }
+      },
+      "required": ["title", "category"]
+    },
+    "Booking": {
+      "title": "Training Booking",
+      "description": "A record of a scheduled personal training session.",
+      "type": "object",
+      "properties": {
+        "bookingId": { "type": "string" },
+        "userId": { "type": "string" },
+        "trainerId": { "type": "string" },
+        "serviceType": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "serviceType", "date"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Stores user profiles."
+    },
+    "/programs/{programId}": {
+      "schema": "Program",
+      "description": "Stores available fitness programs."
+    },
+    "/users/{userId}/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Stores user session bookings."
+    }
+  }
+}

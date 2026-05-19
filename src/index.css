@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-brand-blue: #00f2ff;
+  --color-brand-purple: #7000ff;
+  --color-brand-dark: #050505;
+  --color-brand-gray: #121212;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-brand-dark);
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+.glass-morphism {
+  background: rgba(18, 18, 18, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.neon-glow-blue {
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.15);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #ffffff, #a1a1a1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cinematic-mask {
+  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+
+/* GSAP/Lenis Smooth Scroll support */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
