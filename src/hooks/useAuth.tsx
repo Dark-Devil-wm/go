@@ -19,6 +19,7 @@ interface AuthContextType {
   signUpEmail: (email: string, pass: string, name: string) => Promise<void>;
   signInEmail: (email: string, pass: string) => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
+  updateProfile: (data: any) => Promise<void>;
   logOut: () => Promise<void>;
 }
 
@@ -86,12 +87,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await sendPasswordResetEmail(auth, email);
   };
 
+  const updateProfile = async (data: any) => {
+    if (!user) return;
+    const docRef = doc(db, 'users', user.uid);
+    await setDoc(docRef, data, { merge: true });
+    setProfile((prev: any) => ({ ...prev, ...data }));
+  };
+
   const logOut = async () => {
     await signOut(auth);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, profile, signIn, signUpEmail, signInEmail, resetPassword, logOut }}>
+    <AuthContext.Provider value={{ user, loading, profile, signIn, signUpEmail, signInEmail, resetPassword, updateProfile, logOut }}>
       {children}
     </AuthContext.Provider>
   );

@@ -38,6 +38,22 @@ export const Blog = () => {
       date: 'Apr 28, 2024',
       author: 'Founder',
       img: 'https://images.unsplash.com/photo-1507398941214-57f1892fe482?auto=format&fit=crop&q=80'
+    },
+    {
+      title: 'The Mobility Myth: Re-Engineering Range of Motion',
+      excerpt: 'Why traditional stretching is failing your heavy lifts and how to use loaded mobility to unlock performance.',
+      category: 'Mobility',
+      date: 'Apr 20, 2024',
+      author: 'Sarah Chen',
+      img: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80'
+    },
+    {
+      title: 'Anaerobic Thresholds in High-Performance Executive Life',
+      excerpt: 'Managing the metabolic cost of a high-stress career through targeted anaerobic conditioning.',
+      category: 'Conditioning',
+      date: 'Apr 15, 2024',
+      author: 'Julian Ross',
+      img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80'
     }
   ];
 

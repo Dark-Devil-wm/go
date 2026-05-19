@@ -2,8 +2,10 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Instagram, Linkedin, ArrowRight } from 'lucide-react';
 import { useSEO } from '../hooks/useSEO';
+import { useNavigate } from 'react-router-dom';
 
 export const Trainers = () => {
+  const navigate = useNavigate();
   useSEO('Elite Performance Master Coaches', 'Meet our world-class coaches in London. Experts in biomechanics, clinical nutrition, and neurological performance adaptation.');
 
   const trainers = [
@@ -34,6 +36,20 @@ export const Trainers = () => {
       bio: 'Focused on structural integrity and corrective movement patterns for long-term health.',
       expertise: ['Mobility', 'Prehab', 'Yoga'],
       img: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&q=80'
+    },
+    {
+      name: 'Julian Ross',
+      role: 'Combat Specialist',
+      bio: 'Expert in high-intensity anaerobic conditioning and executive self-defense protocols.',
+      expertise: ['Boxing', 'Conditioning', 'Agility'],
+      img: 'https://images.unsplash.com/photo-1594911773962-763f0dfbacaa?auto=format&fit=crop&q=80'
+    },
+    {
+      name: 'Maya Iskra',
+      role: 'Foundational Strength',
+      bio: 'Pioneer in structural re-engineering for post-injury performance restoration.',
+      expertise: ['Rehab', 'Kettlebells', 'Barbell'],
+      img: 'https://images.unsplash.com/photo-1548690312-e3b507d17a47?auto=format&fit=crop&q=80'
     }
   ];
 
@@ -90,7 +106,10 @@ export const Trainers = () => {
                       <Instagram size={18} className="text-white/20 hover:text-white cursor-pointer transition-colors" />
                       <Linkedin size={18} className="text-white/20 hover:text-white cursor-pointer transition-colors" />
                     </div>
-                    <button className="flex items-center gap-2 group text-[10px] uppercase font-bold tracking-widest text-brand-blue">
+                    <button 
+                      onClick={() => navigate('/contact')}
+                      className="flex items-center gap-2 group text-[10px] uppercase font-bold tracking-widest text-brand-blue"
+                    >
                       View Profile
                       <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                     </button>
@@ -99,6 +118,59 @@ export const Trainers = () => {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* Masterclass Section */}
+        <div className="mt-48">
+          <div className="mb-24">
+            <span className="font-mono text-brand-blue text-xs uppercase tracking-[0.4em] mb-4 block">Specialized Knowledge</span>
+            <h2 className="text-5xl md:text-8xl font-sans font-bold uppercase tracking-tighter leading-none">
+              Deep Dive <br />
+              <span className="italic text-white/20">Masterclasses</span>
+            </h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[
+              {
+                title: 'The Hypertrophy Laboratory',
+                host: 'Elena Vovk',
+                desc: 'A 4-hour immersive workshop on muscle fiber recruitment and metabolic stress optimization.',
+                date: 'June 15, 2024',
+                img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&q=80'
+              },
+              {
+                title: 'Neurological Peak Performance',
+                host: 'David Mercer',
+                desc: 'Understanding C.N.S. fatigue and how to program for high-output executive performance.',
+                date: 'June 22, 2024',
+                img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80'
+              }
+            ].map((session, i) => (
+              <div key={i} className="glass-morphism rounded-[48px] border border-white/5 relative overflow-hidden group">
+                <div className="aspect-video overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-1000">
+                  <img src={session.img} alt={session.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+                </div>
+                <div className="p-12">
+                  <div className="flex justify-between items-center mb-8">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-brand-blue">{session.date}</span>
+                    <div className="w-2 h-2 rounded-full bg-brand-blue animate-pulse shadow-[0_0_10px_rgba(0,242,255,1)]" />
+                  </div>
+                  <h3 className="text-3xl font-sans font-bold uppercase tracking-tight mb-4">{session.title}</h3>
+                  <p className="text-white/40 font-light mb-8 max-w-sm">{session.desc}</p>
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-brand-gray border border-white/10 overflow-hidden">
+                      <img src="/src/assets/images/elite_personal_trainer_1779174821348.png" className="w-full h-full object-cover grayscale" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] uppercase font-mono tracking-widest text-white/20 block">Conducted by</span>
+                      <span className="text-xs uppercase font-mono tracking-widest text-white/60">{session.host}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

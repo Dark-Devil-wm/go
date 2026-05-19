@@ -1,9 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './hooks/useAuth';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './hooks/useAuth';
 import { Navbar } from './components/Layout/Navbar';
 import { Footer } from './components/Layout/Footer';
 import { SmoothScroll } from './components/Layout/SmoothScroll';
 import { AIChat } from './components/AI/AIChat';
+import { motion, AnimatePresence } from 'motion/react';
 
 // Pages
 import { Home } from './pages/Home';
@@ -20,6 +21,36 @@ import { FAQ } from './pages/FAQ';
 import { Privacy } from './pages/Privacy';
 import { Terms } from './pages/Terms';
 import { Classes } from './pages/Classes';
+import { NotFound } from './pages/NotFound';
+
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const { user, loading } = useAuth();
+  
+  if (loading) return (
+    <div className="h-screen w-full flex items-center justify-center bg-brand-dark">
+      <motion.div 
+        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 1, 0.3] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        className="w-12 h-12 border-2 border-brand-blue rounded-full"
+      />
+    </div>
+  );
+  
+  if (!user) return <Navigate to="/auth" />;
+  
+  return <>{children}</>;
+};
+
+const AnimatedPage = ({ children }: { children: React.ReactNode }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+  >
+    {children}
+  </motion.div>
+);
 
 export default function App() {
   return (
@@ -29,23 +60,33 @@ export default function App() {
           <div className="flex flex-col min-h-screen bg-brand-dark selection:bg-brand-blue selection:text-black">
             <Navbar />
             <main className="flex-grow">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/training" element={<Programs />} />
-                <Route path="/programs" element={<Programs />} />
-                <Route path="/memberships" element={<Memberships />} />
-                <Route path="/trainers" element={<Trainers />} />
-                <Route path="/classes" element={<Classes />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/gallery" element={<Gallery />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/faq" element={<FAQ />} />
-                <Route path="/privacy" element={<Privacy />} />
-                <Route path="/terms" element={<Terms />} />
-              </Routes>
+              <AnimatePresence mode="wait">
+                <Routes>
+                  <Route path="/" element={<AnimatedPage><Home /></AnimatedPage>} />
+                  <Route path="/auth" element={<AnimatedPage><Auth /></AnimatedPage>} />
+                  <Route 
+                    path="/dashboard" 
+                    element={
+                      <ProtectedRoute>
+                        <AnimatedPage><Dashboard /></AnimatedPage>
+                      </ProtectedRoute>
+                    } 
+                  />
+                  <Route path="/about" element={<AnimatedPage><About /></AnimatedPage>} />
+                  <Route path="/training" element={<AnimatedPage><Programs /></AnimatedPage>} />
+                  <Route path="/programs" element={<AnimatedPage><Programs /></AnimatedPage>} />
+                  <Route path="/memberships" element={<AnimatedPage><Memberships /></AnimatedPage>} />
+                  <Route path="/trainers" element={<AnimatedPage><Trainers /></AnimatedPage>} />
+                  <Route path="/classes" element={<AnimatedPage><Classes /></AnimatedPage>} />
+                  <Route path="/blog" element={<AnimatedPage><Blog /></AnimatedPage>} />
+                  <Route path="/gallery" element={<AnimatedPage><Gallery /></AnimatedPage>} />
+                  <Route path="/contact" element={<AnimatedPage><Contact /></AnimatedPage>} />
+                  <Route path="/faq" element={<AnimatedPage><FAQ /></AnimatedPage>} />
+                  <Route path="/privacy" element={<AnimatedPage><Privacy /></AnimatedPage>} />
+                  <Route path="/terms" element={<AnimatedPage><Terms /></AnimatedPage>} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </AnimatePresence>
             </main>
             <AIChat />
             <Footer />

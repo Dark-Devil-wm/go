@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
+import { useSEO } from '../hooks/useSEO';
 
 const faqs = [
   {
@@ -26,6 +27,7 @@ const faqs = [
 ];
 
 export const FAQ = () => {
+  useSEO('Knowledge Base - F.A.Q', 'Find answers to common questions about admissions, memberships, clinical nutrition, and studio access at Strength Fitness London.');
   return (
     <div className="bg-brand-dark pt-32 pb-24 min-h-screen">
       <section className="px-6 py-24 max-w-4xl mx-auto">

@@ -2,9 +2,11 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Clock, Users, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useSEO } from '../hooks/useSEO';
 
 export const Programs = () => {
   const navigate = useNavigate();
+  useSEO('Performance Protocols', 'Discover our data-driven performance blueprints. From Absolute Strength to Metabolic Matrix, forged in our London laboratory.');
   const programs = [
     {
       title: 'Hypertrophy Protocol',

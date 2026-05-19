@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Maximize2 } from 'lucide-react';
+import { useSEO } from '../hooks/useSEO';
 
 const images = [
   { url: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80', title: 'The Performance Floor', category: 'Studio' },
@@ -14,6 +15,7 @@ const images = [
 ];
 
 export const Gallery = () => {
+  useSEO('Visual Sanctuary - Our Studios', 'Explore the high-performance environment of Strength Fitness London. View our elite equipment, clinical labs, and transformation spaces.');
   const [selectedImg, setSelectedImg] = useState<string | null>(null);
 
   return (
@@ -40,9 +42,10 @@ export const Gallery = () => {
             >
               <img 
                 src={img.url} 
-                alt={img.title} 
+                alt={`${img.title} - Strength Fitness London ${img.category}`} 
                 className="w-full grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
                 referrerPolicy="no-referrer"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="absolute bottom-8 left-8 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">

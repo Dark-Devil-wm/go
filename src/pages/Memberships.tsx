@@ -21,6 +21,29 @@ export const Memberships = () => {
           </p>
         </div>
 
+        {/* Selection Process */}
+        <div className="mb-32 grid grid-cols-1 md:grid-cols-4 gap-8">
+          {[
+            { step: '01', title: 'Application', desc: 'Secure your place in the waitlist by submitting your physical diagnostics.' },
+            { step: '02', title: 'Consultation', desc: 'A 60-minute deep dive with a head coach into your medical and training history.' },
+            { step: '03', title: 'Onboarding', desc: 'Full biometric screening and endocrine analysis at our Shelton Street lab.' },
+            { step: '04', title: 'Integration', desc: 'Commence your optimized protocol with 24/7 digital concierge support.' }
+          ].map((item, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="glass-morphism p-8 rounded-3xl border border-white/5 relative group hover:border-brand-blue/30 transition-all"
+            >
+              <div className="text-4xl font-sans font-bold italic text-white/5 mb-4 group-hover:text-brand-blue/20 transition-colors">{item.step}</div>
+              <h4 className="text-lg font-bold uppercase tracking-widest mb-4">{item.title}</h4>
+              <p className="text-white/40 text-sm font-light leading-relaxed">{item.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {[
             {
@@ -86,6 +109,44 @@ export const Memberships = () => {
               </button>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* Comparison Table */}
+      <section className="py-24 px-6 overflow-x-auto">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-sans font-bold uppercase tracking-tight italic">Protocol Comparison</h2>
+          </div>
+          
+          <table className="w-full text-left border-collapse min-w-[800px]">
+            <thead>
+              <tr className="border-b border-white/10">
+                <th className="py-8 text-white/40 uppercase tracking-widest text-[10px] font-mono">Feature Set</th>
+                <th className="py-8 text-white font-bold uppercase tracking-widest text-[10px] font-mono text-center">Digital Elite</th>
+                <th className="py-8 text-brand-blue font-bold uppercase tracking-widest text-[10px] font-mono text-center">Studio Master</th>
+                <th className="py-8 text-brand-purple font-bold uppercase tracking-widest text-[10px] font-mono text-center">The Collective</th>
+              </tr>
+            </thead>
+            <tbody className="text-sm font-light text-white/60">
+              {[
+                { feature: 'Personal Training Sessions', digital: 'Remote Only', studio: '12 / Month', collective: 'Unlimited' },
+                { feature: 'Biometric Screening', digital: 'Self-Reported', studio: 'Quarterly', collective: 'Monthly' },
+                { feature: 'Endocrine Analysis', digital: 'No', studio: 'Annual', collective: 'Quarterly' },
+                { feature: 'Nutrition Mapping', digital: 'Basic', studio: 'Clinical', collective: 'Chef-Direct' },
+                { feature: 'Recovery Suite Access', digital: 'No', studio: 'Standard', collective: 'Priority' },
+                { feature: 'Digital Concierge', digital: 'Standard', studio: 'Priority', collective: 'VIP Private' },
+                { feature: 'Guest Passes', digital: 'None', studio: '2 / Month', collective: 'Unlimited' },
+              ].map((row, i) => (
+                <tr key={i} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                  <td className="py-6 font-mono text-[10px] uppercase tracking-widest">{row.feature}</td>
+                  <td className="py-6 text-center">{row.digital}</td>
+                  <td className="py-6 text-center text-white">{row.studio}</td>
+                  <td className="py-6 text-center text-white">{row.collective}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
 

@@ -129,6 +129,30 @@ export const Home = () => {
               </button>
             </div>
           </div>
+
+          {/* Transformation Grid Overlay */}
+          <div className="mt-32 grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { name: 'Sarah K.', stat: '-12% Body Fat', time: '8 Weeks', img: 'https://images.unsplash.com/photo-1548690312-e3b507d17a47?auto=format&fit=crop&q=80' },
+              { name: 'David L.', stat: '+8kg Lean Mass', time: '16 Weeks', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80' },
+              { name: 'Michael R.', stat: 'Rehab Completion', time: '12 Weeks', img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&q=80' },
+            ].map((item, i) => (
+              <motion.div 
+                key={i}
+                whileHover={{ scale: 0.98 }}
+                className="glass-morphism rounded-3xl p-6 border border-white/5 flex items-center gap-6 group cursor-pointer"
+              >
+                <div className="w-20 h-20 rounded-2xl overflow-hidden grayscale group-hover:grayscale-0 transition-all border border-white/10">
+                  <img src={item.img} className="w-full h-full object-cover" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold uppercase tracking-widest mb-1">{item.name}</h4>
+                  <p className="text-brand-blue text-[10px] font-mono uppercase tracking-widest mb-1">{item.stat}</p>
+                  <p className="text-white/20 text-[9px] uppercase tracking-widest">{item.time} Blueprint</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -218,6 +242,14 @@ export const Home = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
+            <div className="mb-12 max-w-lg mx-auto rounded-[32px] overflow-hidden border border-white/5 shadow-2xl">
+              <img 
+                src="https://lh3.googleusercontent.com/p/AF1QipOEscBMq6j0kubY3PSGgzIcSINCXReic7GbjRp3=w461-h200-n-k-no-nu" 
+                alt="Strength Studio"
+                className="w-full h-auto grayscale transition-all duration-1000 hover:grayscale-0"
+                referrerPolicy="no-referrer"
+              />
+            </div>
             <div className="text-6xl text-brand-blue/20 font-serif mb-8 rotate-180 inline-block tracking-widest">“</div>
             <blockquote className="text-3xl md:text-5xl font-serif italic text-white/80 leading-tight mb-12">
               Excellence is never an accident. It is always the result of high intention, sincere effort, and intelligent execution.

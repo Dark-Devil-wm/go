@@ -9,6 +9,30 @@ export const Footer = () => {
       {/* Background Glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-brand-blue/5 blur-[120px] rounded-full pointer-events-none" />
 
+      {/* Newsletter Section */}
+      <div className="max-w-7xl mx-auto px-6 mb-24 pb-24 border-b border-white/5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h3 className="text-3xl md:text-5xl font-sans font-bold uppercase tracking-tight mb-4 italic">
+              Subscribe to <span className="text-brand-blue">Intelligence</span>
+            </h3>
+            <p className="text-white/40 font-light max-w-md">
+              Receive clinical nutrition updates, performance research, and exclusive London event invitations.
+            </p>
+          </div>
+          <form className="relative group" onSubmit={(e) => e.preventDefault()}>
+            <input 
+              type="email" 
+              placeholder="ENTER EMAIL ADDRESS" 
+              className="w-full bg-white/5 border border-white/10 rounded-2xl py-6 px-8 text-sm font-mono tracking-widest focus:outline-none focus:border-brand-blue/50 transition-all placeholder:text-white/20"
+            />
+            <button className="absolute right-3 top-1/2 -translate-y-1/2 bg-white text-black px-8 py-3 rounded-xl font-bold uppercase tracking-widest text-[10px] hover:bg-brand-blue transition-all">
+              Initialize
+            </button>
+          </form>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
         <div className="col-span-1 md:col-span-2">
           <Link to="/" className="inline-block mb-6">
@@ -80,8 +104,13 @@ export const Footer = () => {
           © 2024 STRENGTH FITNESS. ALL RIGHTS RESERVED.
         </p>
         <div className="flex gap-8">
-          <Link to="/" className="text-white/20 text-xs hover:text-white transition-colors">DESIGNED BY AI STUDIO</Link>
-          <Link to="/" className="text-white/20 text-xs hover:text-white transition-colors">BACK TO TOP</Link>
+          <span className="text-white/20 text-xs font-mono">ESTABLISHED LONDON</span>
+          <button 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="text-white/20 text-xs hover:text-white transition-colors uppercase tracking-[0.25em] font-mono cursor-pointer"
+          >
+            Back to top
+          </button>
         </div>
       </div>
     </footer>

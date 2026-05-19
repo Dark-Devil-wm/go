@@ -1,17 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { collection, query, getDocs, orderBy, onSnapshot } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import { Calendar, Clock, Trophy, User as UserIcon, LogOut, ChevronRight, Plus } from 'lucide-react';
+import { Calendar, Clock, Trophy, User as UserIcon, LogOut, ChevronRight, Plus, Activity } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { BookingModal } from '../components/Dashboard/BookingModal';
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+
+const performanceData = [
+  { name: 'Mon', power: 400, recovery: 240 },
+  { name: 'Tue', power: 520, recovery: 320 },
+  { name: 'Wed', power: 480, recovery: 280 },
+  { name: 'Thu', power: 610, recovery: 450 },
+  { name: 'Fri', power: 590, recovery: 510 },
+  { name: 'Sat', power: 720, recovery: 600 },
+  { name: 'Sun', power: 680, recovery: 650 },
+];
 
 export const Dashboard = () => {
-  const { user, profile, loading, logOut } = useAuth();
+  const { user, profile, loading, logOut, updateProfile } = useAuth();
   const [bookings, setBookings] = useState<any[]>([]);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [newName, setNewName] = useState('');
+  const [isUpdating, setIsUpdating] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (profile) {
+      setNewName(profile.displayName || '');
+    }
+  }, [profile]);
+
+  const handleUpdateProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsUpdating(true);
+    try {
+      await updateProfile({ displayName: newName });
+      setIsSettingsOpen(false);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
 
   useEffect(() => {
     if (!user) {
@@ -47,7 +80,7 @@ export const Dashboard = () => {
     <div className="pt-32 pb-24 px-6 md:px-12 bg-brand-dark min-h-screen">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
           <div>
             <span className="font-mono text-brand-blue text-xs uppercase tracking-[0.4em] mb-4 block">Personal Dashboard</span>
             <h1 className="text-5xl md:text-7xl font-sans font-bold uppercase tracking-tighter leading-none">
@@ -55,18 +88,88 @@ export const Dashboard = () => {
               <span className="italic text-white/20">{profile.displayName?.split(' ')[0]}</span>
             </h1>
           </div>
-          <button 
-            onClick={() => logOut()}
-            className="flex items-center gap-2 text-white/40 hover:text-white transition-colors uppercase font-mono text-[10px] tracking-widest border border-white/10 px-6 py-3 rounded-full"
-          >
-            <LogOut size={14} />
-            Sign Out
-          </button>
+          <div className="flex gap-4">
+            <button 
+              onClick={() => setIsSettingsOpen(true)}
+              className="flex items-center gap-2 text-white/40 hover:text-white transition-colors uppercase font-mono text-[10px] tracking-widest border border-white/10 px-6 py-3 rounded-full"
+            >
+              <UserIcon size={14} />
+              Profile Settings
+            </button>
+            <button 
+              onClick={() => logOut()}
+              className="flex items-center gap-2 text-white/40 hover:text-white transition-colors uppercase font-mono text-[10px] tracking-widest border border-white/10 px-6 py-3 rounded-full"
+            >
+              <LogOut size={14} />
+              Sign Out
+            </button>
+          </div>
         </div>
 
+        {/* Dashboard Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-12">
+            {/* Performance Metrics */}
+            <div className="glass-morphism p-8 rounded-3xl border border-white/5">
+              <div className="flex items-center justify-between mb-8">
+                <div>
+                  <h3 className="text-xl font-sans font-bold uppercase tracking-tight">Anabolic Capacity</h3>
+                  <p className="text-[10px] text-white/40 uppercase tracking-widest mt-1">Neuromuscular Power Output (Estimated)</p>
+                </div>
+                <div className="flex gap-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-brand-blue" />
+                    <span className="text-[9px] uppercase tracking-widest text-white/40">Power</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-white/20" />
+                    <span className="text-[9px] uppercase tracking-widest text-white/40">Rest</span>
+                  </div>
+                </div>
+              </div>
+              <div className="h-[300px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={performanceData}>
+                    <defs>
+                      <linearGradient id="colorPower" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#00f2ff" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="#00f2ff" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
+                    <XAxis 
+                      dataKey="name" 
+                      axisLine={false} 
+                      tickLine={false} 
+                      tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10, fontFamily: 'monospace' }} 
+                    />
+                    <YAxis hide />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#121212', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', fontSize: '10px' }}
+                      itemStyle={{ color: '#00f2ff' }}
+                    />
+                    <Area 
+                      type="monotone" 
+                      dataKey="power" 
+                      stroke="#00f2ff" 
+                      fillOpacity={1} 
+                      fill="url(#colorPower)" 
+                      strokeWidth={3}
+                    />
+                    <Area 
+                      type="monotone" 
+                      dataKey="recovery" 
+                      stroke="rgba(255,255,255,0.2)" 
+                      fill="transparent" 
+                      strokeWidth={2}
+                      strokeDasharray="5 5"
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
             {/* Stats */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               {[
@@ -178,6 +281,65 @@ export const Dashboard = () => {
         onClose={() => setIsBookingOpen(false)} 
         userId={user?.uid || ''} 
       />
+
+      {/* Settings Modal */}
+      <AnimatePresence>
+        {isSettingsOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsSettingsOpen(false)}
+              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative w-full max-w-lg glass-morphism p-12 rounded-[48px] border border-white/10 shadow-2xl"
+            >
+              <h2 className="text-3xl font-sans font-bold uppercase tracking-tight mb-8">Profile Settings</h2>
+              <form onSubmit={handleUpdateProfile} className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-[10px] uppercase tracking-widest text-white/40 font-mono">Display Name</label>
+                  <input 
+                    type="text" 
+                    value={newName}
+                    onChange={(e) => setNewName(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 outline-none focus:border-brand-blue transition-all text-white"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] uppercase tracking-widest text-white/40 font-mono">Registration Email</label>
+                  <input 
+                    type="email" 
+                    value={profile.email}
+                    disabled
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl p-5 opacity-40 cursor-not-allowed"
+                  />
+                </div>
+                <div className="flex gap-4 pt-4">
+                  <button 
+                    type="submit"
+                    disabled={isUpdating}
+                    className="flex-grow bg-white text-black py-4 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-brand-blue transition-all disabled:opacity-50"
+                  >
+                    {isUpdating ? 'Saving...' : 'Update Protocol'}
+                  </button>
+                  <button 
+                    type="button"
+                    onClick={() => setIsSettingsOpen(false)}
+                    className="px-8 border border-white/10 rounded-xl font-bold uppercase tracking-widest text-[10px] hover:bg-white/5"
+                  >
+                    Close
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
